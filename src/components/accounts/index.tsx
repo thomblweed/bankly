@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { accountsQueryOptions } from "../../query/options/accounts";
+import { getAccountsQueryOptions } from "../../query/options/accounts";
 
 import { AccountItem } from "./item";
 import "./index.css";
 
 export const Accounts = () => {
-  const { data: accounts } = useQuery(accountsQueryOptions());
+  const { data: accounts } = useQuery(getAccountsQueryOptions());
 
   return (
     <>

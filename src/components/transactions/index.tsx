@@ -1,13 +1,12 @@
 import * as Tabs from "@radix-ui/react-tabs";
-import { Transaction as TransactionType } from "../../../types";
-import { transactions } from "../../api/data/transactions";
+
 import "./index.css";
 import { Transaction } from "./item";
-
-const isExpense = (transaction: TransactionType) => transaction.amount.value < 0;
-const isIncome = (transaction: TransactionType) => transaction.amount.value > 0;
+import { useExpensesTransactions, useIncomeTransactions } from "./context";
 
 const Expenses = () => {
+  const { expensesTransactions } = useExpensesTransactions();
+
   return (
     <table aria-label="Expenses">
       <thead>
@@ -18,7 +17,7 @@ const Expenses = () => {
         </tr>
       </thead>
       <tbody>
-        {transactions.filter(isExpense).map((transaction) => (
+        {expensesTransactions.map((transaction) => (
           <Transaction transaction={transaction} key={transaction.id} />
         ))}
       </tbody>
@@ -27,6 +26,8 @@ const Expenses = () => {
 };
 
 const Income = () => {
+  const { incomeTransactions } = useIncomeTransactions();
+
   return (
     <table aria-label="Income">
       <thead>
@@ -37,7 +38,7 @@ const Income = () => {
         </tr>
       </thead>
       <tbody>
-        {transactions.filter(isIncome).map((transaction) => (
+        {incomeTransactions.map((transaction) => (
           <Transaction transaction={transaction} key={transaction.id} />
         ))}
       </tbody>
