@@ -1,9 +1,26 @@
-import { render, screen } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
+
+import { renderWithQueryClient, testQueryClient } from "../../../tests/utils";
+import { TransactionsProvider } from "./context";
 import { TransactionHistory } from ".";
 
+const TransactionHistoryWithTransactionsProvider = () => (
+  <TransactionsProvider>
+    <TransactionHistory />
+  </TransactionsProvider>
+);
+
 describe("transaction history", () => {
-  test("the expenses tab should be shown by default", () => {
-    render(<TransactionHistory />);
+  afterEach(() => {
+    testQueryClient.clear();
+  });
+
+  test("the expenses tab should be shown by default", async () => {
+    renderWithQueryClient(<TransactionHistoryWithTransactionsProvider />);
 
     expect(screen.getByText("Transaction History")).toBeInTheDocument();
 
@@ -18,11 +35,16 @@ describe("transaction history", () => {
     });
 
     expect(expensesTable).toBeInTheDocument();
+
+    await waitForElementToBeRemoved(() =>
+      screen.queryByRole("cell", { name: "Loading..." }),
+    );
+
     expect(screen.getByText("-20.25")).toBeInTheDocument();
   });
 
   test.skip("changing between the expenses and income tabs should show different transactions", () => {
-    render(<TransactionHistory />);
+    render(<TransactionHistoryWithTransactionsProvider />);
 
     const expensesTabTrigger = screen.getByRole("tab", {
       name: "Expenses",
