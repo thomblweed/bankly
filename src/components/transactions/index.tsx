@@ -1,12 +1,32 @@
 import * as Tabs from "@radix-ui/react-tabs";
 
+import { Loading } from "../loading";
 import "./index.css";
 import { Transaction } from "./item";
-import { useExpensesTransactions, useIncomeTransactions } from "./context";
+import {
+  useExpensesTransactions,
+  useIncomeTransactions,
+  useTransactionsLoading,
+} from "./context";
+
+const ExpensesTransactionsBody = () => {
+  const { expensesTransactions } = useExpensesTransactions();
+  const isLoading = useTransactionsLoading();
+
+  return isLoading ? (
+    <tr>
+      <td colSpan={3}>
+        <Loading />
+      </td>
+    </tr>
+  ) : (
+    expensesTransactions.map((transaction) => (
+      <Transaction transaction={transaction} key={transaction.id} />
+    ))
+  );
+};
 
 const Expenses = () => {
-  const { expensesTransactions } = useExpensesTransactions();
-
   return (
     <table aria-label="Expenses">
       <thead>
@@ -17,17 +37,21 @@ const Expenses = () => {
         </tr>
       </thead>
       <tbody>
-        {expensesTransactions.map((transaction) => (
-          <Transaction transaction={transaction} key={transaction.id} />
-        ))}
+        <ExpensesTransactionsBody />
       </tbody>
     </table>
   );
 };
 
-const Income = () => {
+const IncomeTransactionsBody = () => {
   const { incomeTransactions } = useIncomeTransactions();
 
+  return incomeTransactions.map((transaction) => (
+    <Transaction transaction={transaction} key={transaction.id} />
+  ));
+};
+
+const Income = () => {
   return (
     <table aria-label="Income">
       <thead>
@@ -38,9 +62,7 @@ const Income = () => {
         </tr>
       </thead>
       <tbody>
-        {incomeTransactions.map((transaction) => (
-          <Transaction transaction={transaction} key={transaction.id} />
-        ))}
+        <IncomeTransactionsBody />
       </tbody>
     </table>
   );
