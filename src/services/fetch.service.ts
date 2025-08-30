@@ -1,4 +1,4 @@
-export const fetchService = async (url: string) => {
+export const fetchService = async <Response>(url: string) => {
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -7,5 +7,5 @@ export const fetchService = async (url: string) => {
 
   const data = await response.json();
 
-  return data;
+  return data as Response;
 };

@@ -1,26 +1,31 @@
 import type { Transaction as TransactionType } from "../../../types";
+import { useTransactionProps } from "./hooks/useTransactionProps";
 import { Avatar } from "./avatar";
 
 type Props = {
   transaction: TransactionType;
 };
 
-export const Transaction = ({ transaction }: Props) => (
-  <tr>
-    <td>
-      <div className="transaction-detail">
-        <Avatar name={transaction.description} />
-        <div className="transaction-description">
-          {transaction.description}
-          <div className="transaction-category">{transaction.category}</div>
+export const Transaction = ({ transaction }: Props) => {
+  const { localeEnGbDate, currencyAmount } = useTransactionProps(transaction);
+
+  return (
+    <tr>
+      <td>
+        <div className="transaction-detail">
+          <Avatar name={transaction.description} />
+          <div className="transaction-description">
+            {transaction.description}
+            <div className="transaction-category">{transaction.category}</div>
+          </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div>{transaction.date}</div>
-    </td>
-    <td className="transaction-amount">
-      <div className="amount">{transaction.amount.value}</div>
-    </td>
-  </tr>
-);
+      </td>
+      <td>
+        <div>{localeEnGbDate}</div>
+      </td>
+      <td className="transaction-amount">
+        <div className="amount">{currencyAmount}</div>
+      </td>
+    </tr>
+  );
+};
