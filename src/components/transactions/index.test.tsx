@@ -43,7 +43,10 @@ describe("transaction history", () => {
       screen.queryByRole("cell", { name: "Loading..." }),
     );
 
-    expect(screen.getByText("-20.25")).toBeInTheDocument();
+    expect(screen.getByText("€-20.25")).toBeInTheDocument();
+    expect(
+      screen.getByRole("cell", { name: "24 June 2022" }),
+    ).toBeInTheDocument();
   });
 
   it("should display an error to the user when there is an api error", async () => {
