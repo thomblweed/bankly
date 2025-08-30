@@ -1,8 +1,8 @@
 import type { Transaction } from "../../types";
+import { fetchService } from "./fetch.service";
 
 export const getAllTransactions = async () => {
-  const response = await fetch("/api/transactions");
-  const data = await response.json();
+  const response = await fetchService("/api/transactions");
 
-  return data as Transaction[];
+  return response as Transaction[];
 };

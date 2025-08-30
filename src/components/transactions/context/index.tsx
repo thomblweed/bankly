@@ -17,46 +17,57 @@ const ExpensesTransactionsContext =
   createContext<ExpensesTransactionsContextType | null>(null);
 const IncomeTransactionsContext =
   createContext<IncomeTransactionsContextType | null>(null);
-const TransactionsLoadingContext = createContext<boolean | null>(null);
+const TransactionsStatusContext = createContext<{
+  isLoading: boolean;
+  error: Error | null;
+} | null>(null);
 
 const isExpense = (transaction: TransactionType) =>
   transaction.amount.value < 0;
 const isIncome = (transaction: TransactionType) => transaction.amount.value > 0;
 
 export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const { data, isLoading } = useQuery(getTransactionsQueryOptions());
+  const { data, isLoading, error } = useQuery(getTransactionsQueryOptions());
 
   const expensesTransactionsValue = useMemo(
     () => ({
-      expensesTransactions: data?.filter(isExpense) || [],
+      expensesTransactions: error ? [] : data?.filter(isExpense) || [],
     }),
-    [data],
+    [data, error],
   );
 
   const incomeTransactionsValue = useMemo(
     () => ({
-      incomeTransactions: data?.filter(isIncome) || [],
+      incomeTransactions: error ? [] : data?.filter(isIncome) || [],
     }),
-    [data],
+    [data, error],
+  );
+
+  const transactionsStatusValue = useMemo(
+    () => ({
+      isLoading,
+      error,
+    }),
+    [isLoading, error],
   );
 
   return (
-    <TransactionsLoadingContext.Provider value={isLoading}>
+    <TransactionsStatusContext.Provider value={transactionsStatusValue}>
       <ExpensesTransactionsContext.Provider value={expensesTransactionsValue}>
         <IncomeTransactionsContext.Provider value={incomeTransactionsValue}>
           {children}
         </IncomeTransactionsContext.Provider>
       </ExpensesTransactionsContext.Provider>
-    </TransactionsLoadingContext.Provider>
+    </TransactionsStatusContext.Provider>
   );
 };
 
-export const useTransactionsLoading = () => {
-  const context = useContext(TransactionsLoadingContext);
+export const useTransactionsStatus = () => {
+  const context = useContext(TransactionsStatusContext);
 
   if (context == null) {
     throw new Error(
-      "useTransactionsLoading must be used within a TransactionsProvider",
+      "useTransactionsStatus must be used within a TransactionsProvider",
     );
   }
 
