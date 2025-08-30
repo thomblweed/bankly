@@ -7,6 +7,8 @@ import {
 import { renderWithQueryClient, testQueryClient } from "../../../tests/utils";
 import { TransactionsProvider } from "./context";
 import { TransactionHistory } from ".";
+import { server } from "../../../vitest-setup";
+import { delay, http, HttpHandler, HttpResponse } from "msw";
 
 const TransactionHistoryWithTransactionsProvider = () => (
   <TransactionsProvider>
@@ -17,6 +19,7 @@ const TransactionHistoryWithTransactionsProvider = () => (
 describe("transaction history", () => {
   afterEach(() => {
     testQueryClient.clear();
+    server.resetHandlers();
   });
 
   test("the expenses tab should be shown by default", async () => {
@@ -41,6 +44,40 @@ describe("transaction history", () => {
     );
 
     expect(screen.getByText("-20.25")).toBeInTheDocument();
+  });
+
+  it("should display an error to the user when there is an api error", async () => {
+    server.use(
+      http.get("/api/transactions", () =>
+        HttpResponse.json({ error: "API error" }, { status: 500 }),
+      ),
+    );
+
+    renderWithQueryClient(<TransactionHistoryWithTransactionsProvider />);
+
+    expect(screen.getByText("Transaction History")).toBeInTheDocument();
+
+    const expensesTabTrigger = screen.getByRole("tab", {
+      name: "Expenses",
+    });
+
+    expect(expensesTabTrigger).toHaveAttribute("data-state", "active");
+
+    const expensesTable = screen.getByRole("table", {
+      name: "Expenses",
+    });
+
+    expect(expensesTable).toBeInTheDocument();
+
+    await waitForElementToBeRemoved(() =>
+      screen.queryByRole("cell", { name: "Loading..." }),
+    );
+
+    expect(
+      screen.getByText(
+        "There has been error in retrieving your expenses transactions",
+      ),
+    ).toBeInTheDocument();
   });
 
   test.skip("changing between the expenses and income tabs should show different transactions", () => {

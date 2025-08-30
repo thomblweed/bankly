@@ -67,7 +67,7 @@ export const useTransactionsStatus = () => {
 
   if (context == null) {
     throw new Error(
-      "useTransactionsLoading must be used within a TransactionsProvider",
+      "useTransactionsStatus must be used within a TransactionsProvider",
     );
   }
 
