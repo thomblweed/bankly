@@ -14,8 +14,11 @@ const getCurrencySymbol = (currency: string) => {
   }
 };
 
-const amountToCurrencyDisplay = (value: number, currency: string) =>
-  `${getCurrencySymbol(currency)}${value}`;
+const amountToCurrencyDisplay = (value: number, currency: string) => {
+  const symbol = getCurrencySymbol(currency);
+
+  return value < 0 ? `-${symbol}${Math.abs(value)}` : `${symbol}${value}`;
+};
 
 export const useTransactionProps = (transaction: Transaction) => {
   const { date, amount } = transaction;

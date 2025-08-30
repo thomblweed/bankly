@@ -42,7 +42,7 @@ describe("transaction history", () => {
       screen.queryByRole("cell", { name: "Loading..." }),
     );
 
-    expect(screen.getByText("€-20.25")).toBeInTheDocument();
+    expect(screen.getByText("-€20.25")).toBeInTheDocument();
     expect(
       screen.getByRole("cell", { name: "24 June 2022" }),
     ).toBeInTheDocument();
@@ -105,13 +105,13 @@ describe("transaction history", () => {
       screen.queryByRole("cell", { name: "Loading..." }),
     );
 
-    expect(screen.getByText("€-20.25")).toBeInTheDocument();
+    expect(screen.getByText("-€20.25")).toBeInTheDocument();
 
     await user.click(incomeTabTrigger);
 
     expect(incomeTabTrigger).toHaveAttribute("data-state", "active");
     expect(expensesTabTrigger).toHaveAttribute("data-state", "inactive");
-    expect(screen.queryByText("€-20.25")).not.toBeInTheDocument();
+    expect(screen.queryByText("-€20.25")).not.toBeInTheDocument();
     expect(screen.getByRole("cell", { name: "£510.55" })).toBeInTheDocument();
   });
 });
