@@ -1,8 +1,8 @@
 import type { Account } from "../../types";
+import { fetchService } from "./fetch.service";
 
 export const getAccounts = async () => {
-  const response = await fetch("/api/accounts");
-  const data = await response.json();
+  const response = await fetchService("/api/accounts");
 
-  return data as Account[];
+  return response as Account[];
 };
