@@ -1,14 +1,13 @@
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 
 import { renderWithQueryClient, testQueryClient } from "../../../tests/utils";
 import { TransactionsProvider } from "./context";
 import { TransactionHistory } from ".";
 import { server } from "../../../vitest-setup";
-import { delay, http, HttpHandler, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw";
+
+const user = userEvent.setup();
 
 const TransactionHistoryWithTransactionsProvider = () => (
   <TransactionsProvider>
@@ -83,8 +82,8 @@ describe("transaction history", () => {
     ).toBeInTheDocument();
   });
 
-  test.skip("changing between the expenses and income tabs should show different transactions", () => {
-    render(<TransactionHistoryWithTransactionsProvider />);
+  test("changing between the expenses and income tabs should show different transactions", async () => {
+    renderWithQueryClient(<TransactionHistoryWithTransactionsProvider />);
 
     const expensesTabTrigger = screen.getByRole("tab", {
       name: "Expenses",
@@ -102,12 +101,17 @@ describe("transaction history", () => {
     expect(expensesTable).toBeInTheDocument();
     expect(incomeTable).not.toBeInTheDocument();
 
-    expect(screen.getByText("-20.25")).toBeInTheDocument();
+    await waitForElementToBeRemoved(() =>
+      screen.queryByRole("cell", { name: "Loading..." }),
+    );
 
-    incomeTabTrigger.click();
+    expect(screen.getByText("€-20.25")).toBeInTheDocument();
+
+    await user.click(incomeTabTrigger);
 
     expect(incomeTabTrigger).toHaveAttribute("data-state", "active");
     expect(expensesTabTrigger).toHaveAttribute("data-state", "inactive");
-    expect(screen.queryByText("-20.25")).not.toBeInTheDocument();
+    expect(screen.queryByText("€-20.25")).not.toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "£510.55" })).toBeInTheDocument();
   });
 });
