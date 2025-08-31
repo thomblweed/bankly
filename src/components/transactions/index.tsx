@@ -4,11 +4,8 @@ import type { ReactNode } from "react";
 import { Loading } from "../loading";
 import "./index.css";
 import { Transaction } from "./item";
-import {
-  useExpensesTransactions,
-  useIncomeTransactions,
-  useTransactionsStatus,
-} from "./context";
+import { useExpensesTransactions, useIncomeTransactions } from "./context";
+import { ErrorMessage } from "../error-message";
 
 const ThreeColumnLayout = ({ children }: { children: ReactNode }) => (
   <tr>
@@ -17,8 +14,7 @@ const ThreeColumnLayout = ({ children }: { children: ReactNode }) => (
 );
 
 const ExpensesTransactionsBody = () => {
-  const { expensesTransactions } = useExpensesTransactions();
-  const { isLoading, error } = useTransactionsStatus();
+  const { expensesTransactions, isLoading, error } = useExpensesTransactions();
 
   return isLoading ? (
     <ThreeColumnLayout>
@@ -31,9 +27,7 @@ const ExpensesTransactionsBody = () => {
       ))}
       {error ? (
         <ThreeColumnLayout>
-          <p className="error-text">
-            There has been error in retrieving your expenses transactions
-          </p>
+          <ErrorMessage message="There has been error in retrieving your expenses transactions" />
         </ThreeColumnLayout>
       ) : null}
     </>
@@ -47,7 +41,7 @@ const Expenses = () => {
         <tr>
           <th>Description</th>
           <th>Date</th>
-          <th>Amount</th>
+          <th className="amount-column-th">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -58,11 +52,24 @@ const Expenses = () => {
 };
 
 const IncomeTransactionsBody = () => {
-  const { incomeTransactions } = useIncomeTransactions();
+  const { incomeTransactions, isLoading, error } = useIncomeTransactions();
 
-  return incomeTransactions.map((transaction) => (
-    <Transaction transaction={transaction} key={transaction.id} />
-  ));
+  return isLoading ? (
+    <ThreeColumnLayout>
+      <Loading />
+    </ThreeColumnLayout>
+  ) : (
+    <>
+      {incomeTransactions.map((transaction) => (
+        <Transaction transaction={transaction} key={transaction.id} />
+      ))}
+      {error ? (
+        <ThreeColumnLayout>
+          <ErrorMessage message="There has been error in retrieving your income transactions" />
+        </ThreeColumnLayout>
+      ) : null}
+    </>
+  );
 };
 
 const Income = () => {
@@ -72,7 +79,7 @@ const Income = () => {
         <tr>
           <th>Description</th>
           <th>Date</th>
-          <th>Amount</th>
+          <th className="amount-column-th">Amount</th>
         </tr>
       </thead>
       <tbody>

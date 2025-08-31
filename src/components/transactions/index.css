@@ -24,6 +24,7 @@
 }
 
 table {
+    table-layout: fixed;
     background-color: var(--background-800);
     border-radius: var(--border-radius);
     border-spacing: 0;
@@ -45,11 +46,20 @@ th {
     line-height: var(--line-height-normal);
 }
 
+.amount-column-th {
+    width: 8rem;
+    text-align: right;
+}
+
 .transaction-detail {
     display: grid;
     grid-template-columns: min-content 1fr;
     gap: var(--spacer-medium);
     align-items: center;
+}
+
+.transaction-amount {
+    text-align: right;
 }
 
 .error-text {

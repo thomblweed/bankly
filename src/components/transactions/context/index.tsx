@@ -5,22 +5,23 @@ import { getTransactionsQueryOptions } from "../../../query/options/transactions
 
 import type { Transaction as TransactionType } from "../../../../types";
 
-type ExpensesTransactionsContextType = {
-  expensesTransactions: TransactionType[];
-};
+interface QueryState {
+  isLoading: boolean;
+  error: Error | null;
+}
 
-type IncomeTransactionsContextType = {
+interface ExpensesTransactionsContextType extends QueryState {
+  expensesTransactions: TransactionType[];
+}
+
+interface IncomeTransactionsContextType extends QueryState {
   incomeTransactions: TransactionType[];
-};
+}
 
 const ExpensesTransactionsContext =
   createContext<ExpensesTransactionsContextType | null>(null);
 const IncomeTransactionsContext =
   createContext<IncomeTransactionsContextType | null>(null);
-const TransactionsStatusContext = createContext<{
-  isLoading: boolean;
-  error: Error | null;
-} | null>(null);
 
 const isExpense = (transaction: TransactionType) =>
   transaction.amount.value < 0;
@@ -31,47 +32,29 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const expensesTransactionsValue = useMemo(
     () => ({
-      expensesTransactions: error ? [] : data?.filter(isExpense) || [],
+      expensesTransactions: data?.filter(isExpense) || [],
+      isLoading,
+      error,
     }),
-    [data, error],
+    [data, error, isLoading],
   );
 
   const incomeTransactionsValue = useMemo(
     () => ({
-      incomeTransactions: error ? [] : data?.filter(isIncome) || [],
-    }),
-    [data, error],
-  );
-
-  const transactionsStatusValue = useMemo(
-    () => ({
+      incomeTransactions: data?.filter(isIncome) || [],
       isLoading,
       error,
     }),
-    [isLoading, error],
+    [data, error, isLoading],
   );
 
   return (
-    <TransactionsStatusContext.Provider value={transactionsStatusValue}>
-      <ExpensesTransactionsContext.Provider value={expensesTransactionsValue}>
-        <IncomeTransactionsContext.Provider value={incomeTransactionsValue}>
-          {children}
-        </IncomeTransactionsContext.Provider>
-      </ExpensesTransactionsContext.Provider>
-    </TransactionsStatusContext.Provider>
+    <ExpensesTransactionsContext.Provider value={expensesTransactionsValue}>
+      <IncomeTransactionsContext.Provider value={incomeTransactionsValue}>
+        {children}
+      </IncomeTransactionsContext.Provider>
+    </ExpensesTransactionsContext.Provider>
   );
-};
-
-export const useTransactionsStatus = () => {
-  const context = useContext(TransactionsStatusContext);
-
-  if (context == null) {
-    throw new Error(
-      "useTransactionsStatus must be used within a TransactionsProvider",
-    );
-  }
-
-  return context;
 };
 
 export const useExpensesTransactions = () => {
