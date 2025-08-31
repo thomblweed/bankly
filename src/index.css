@@ -5,8 +5,11 @@
     --primary-900: #ffffff;
     --primary-300: #88869f;
     --link: #646cff;
+    --color-black: #000000;
+    --color-light: #d9d9d9;
     --color-red: #ff0000;
-    --color-gray: #323241;
+    --color-gray-100: #323241;
+    --color-gray-200: #282834;
 
     /* spacers */
     --spacer-small: 0.5rem;
@@ -36,7 +39,7 @@
     --line-height-xlarge: 40px;
 
     --border-radius: var(--spacer-small);
-    --border-color: var(--color-gray);
+    --border-color: var(--color-gray-100);
 
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -78,11 +81,12 @@ h1 {
 
 button {
     border-radius: var(--border-radius);
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
+    border: 1px solid var(--color-gray-200);
+    padding: var(--spacer-small) var(--spacer-large);
+    font-size: var(--font-small-medium);
     font-weight: var(--font-weight-medium);
     font-family: inherit;
+    line-height: var(--line-height-medium);
     background-color: var(--background-900);
     color: var(--primary-300);
     cursor: pointer;
@@ -99,8 +103,9 @@ button:focus-visible {
 }
 
 button[data-state="active"] {
-    --background-900: #d9d9d9;
-    --primary-300: #000000;
+    --background-900: var(--color-light);
+    --primary-300: var(--color-black);
+    border-color: var(--color-light);
 }
 
 .align-left {
