@@ -6,6 +6,7 @@
     --primary-300: #88869f;
     --link: #646cff;
     --color-red: #ff0000;
+    --color-gray: #323241;
 
     /* spacers */
     --spacer-small: 0.5rem;
@@ -16,6 +17,7 @@
 
     /* fonts */
     --font-small: 0.5rem;
+    --font-small-medium: 0.875rem;
     --font-medium: 1rem;
     --font-large: 1.5rem;
     --font-xlarge: 2rem;
@@ -24,6 +26,7 @@
     /* font weights */
     --font-weight-regular: 400;
     --font-weight-medium: 500;
+    --font-weight-semibold: 600;
     --font-weight-bold: 700;
 
     /* line heights */
@@ -31,6 +34,9 @@
     --line-height-medium: 24px;
     --line-height-large: 30px;
     --line-height-xlarge: 40px;
+
+    --border-radius: var(--spacer-small);
+    --border-color: var(--color-gray);
 
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -71,7 +77,7 @@ h1 {
 }
 
 button {
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
     font-size: 1em;
@@ -105,10 +111,14 @@ button[data-state="active"] {
     margin-top: var(--spacer-medium);
 }
 
-.heading,
-th {
+.heading {
     color: var(--primary-300);
     font-weight: var(--font-weight-regular);
     font-size: var(--font-medium);
     line-height: var(--line-height-normal);
+}
+
+table {
+    border-radius: var(--border-radius);
+    border-spacing: 0;
 }

@@ -31,7 +31,7 @@ const ExpensesTransactionsBody = () => {
       ))}
       {error ? (
         <ThreeColumnLayout>
-          <p className="errorText">
+          <p className="error-text">
             There has been error in retrieving your expenses transactions
           </p>
         </ThreeColumnLayout>

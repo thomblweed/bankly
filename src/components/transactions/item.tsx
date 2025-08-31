@@ -7,7 +7,8 @@ type Props = {
 };
 
 export const Transaction = ({ transaction }: Props) => {
-  const { localeEnGbDate, currencyAmount } = useTransactionProps(transaction);
+  const { localeEnGbDate, currencyAmount, categoryLabel } =
+    useTransactionProps(transaction);
 
   return (
     <tr>
@@ -16,7 +17,7 @@ export const Transaction = ({ transaction }: Props) => {
           <Avatar name={transaction.description} />
           <div className="transaction-description">
             {transaction.description}
-            <div className="transaction-category">{transaction.category}</div>
+            <div className="transaction-category">{categoryLabel}</div>
           </div>
         </div>
       </td>
