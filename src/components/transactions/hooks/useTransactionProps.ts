@@ -1,24 +1,5 @@
-import { Transaction } from "../../../../types";
-
-const getCurrencySymbol = (currency: string) => {
-  switch (currency) {
-    case "USD":
-      return "$";
-    case "EUR":
-      return "€";
-    case "GBP":
-      return "£";
-    default:
-      // TODO: requires an error boundary to handle this scenario
-      throw new Error(`Unsupported currency: ${currency}`);
-  }
-};
-
-const amountToCurrencyDisplay = (value: number, currency: string) => {
-  const symbol = getCurrencySymbol(currency);
-
-  return value < 0 ? `-${symbol}${Math.abs(value)}` : `${symbol}${value}`;
-};
+import type { Transaction } from "../../../../types";
+import { displayValueAsCurrency } from "../../../services/currency.service";
 
 export const useTransactionProps = (transaction: Transaction) => {
   const { date, amount } = transaction;
@@ -29,6 +10,6 @@ export const useTransactionProps = (transaction: Transaction) => {
       month: "long",
       year: "numeric",
     }),
-    currencyAmount: amountToCurrencyDisplay(amount.value, amount.currency_iso),
+    currencyAmount: displayValueAsCurrency(amount.value, amount.currency_iso),
   };
 };

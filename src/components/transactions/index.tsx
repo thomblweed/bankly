@@ -85,7 +85,7 @@ const Income = () => {
 export const TransactionHistory = () => {
   return (
     <>
-      <h1 className="align-left">Transaction History</h1>
+      <h1 className="align-left">Transaction history</h1>
       <Tabs.Root defaultValue="expenses" className="flow">
         <Tabs.List className="tabs__list" aria-label="Filter your transactions">
           <Tabs.Trigger value="expenses">Expenses</Tabs.Trigger>

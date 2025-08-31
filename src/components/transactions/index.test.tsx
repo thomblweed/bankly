@@ -24,7 +24,7 @@ describe("transaction history", () => {
   test("the expenses tab should be shown by default", async () => {
     renderWithQueryClient(<TransactionHistoryWithTransactionsProvider />);
 
-    expect(screen.getByText("Transaction History")).toBeInTheDocument();
+    expect(screen.getByText("Transaction history")).toBeInTheDocument();
 
     const expensesTabTrigger = screen.getByRole("tab", {
       name: "Expenses",
@@ -57,7 +57,7 @@ describe("transaction history", () => {
 
     renderWithQueryClient(<TransactionHistoryWithTransactionsProvider />);
 
-    expect(screen.getByText("Transaction History")).toBeInTheDocument();
+    expect(screen.getByText("Transaction history")).toBeInTheDocument();
 
     const expensesTabTrigger = screen.getByRole("tab", {
       name: "Expenses",
