@@ -32,7 +32,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const expensesTransactionsValue = useMemo(
     () => ({
-      expensesTransactions: error ? [] : data?.filter(isExpense) || [],
+      expensesTransactions: data?.filter(isExpense) || [],
       isLoading,
       error,
     }),
@@ -41,7 +41,7 @@ export const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const incomeTransactionsValue = useMemo(
     () => ({
-      incomeTransactions: error ? [] : data?.filter(isIncome) || [],
+      incomeTransactions: data?.filter(isIncome) || [],
       isLoading,
       error,
     }),
