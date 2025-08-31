@@ -4,11 +4,8 @@ import type { ReactNode } from "react";
 import { Loading } from "../loading";
 import "./index.css";
 import { Transaction } from "./item";
-import {
-  useExpensesTransactions,
-  useIncomeTransactions,
-  useTransactionsStatus,
-} from "./context";
+import { useExpensesTransactions, useIncomeTransactions } from "./context";
+import { ErrorMessage } from "../error-message";
 
 const ThreeColumnLayout = ({ children }: { children: ReactNode }) => (
   <tr>
@@ -30,9 +27,7 @@ const ExpensesTransactionsBody = () => {
       ))}
       {error ? (
         <ThreeColumnLayout>
-          <p className="error-text">
-            There has been error in retrieving your expenses transactions
-          </p>
+          <ErrorMessage message="There has been error in retrieving your expenses transactions" />
         </ThreeColumnLayout>
       ) : null}
     </>
@@ -70,9 +65,7 @@ const IncomeTransactionsBody = () => {
       ))}
       {error ? (
         <ThreeColumnLayout>
-          <p className="error-text">
-            There has been error in retrieving your income transactions
-          </p>
+          <ErrorMessage message="There has been error in retrieving your income transactions" />
         </ThreeColumnLayout>
       ) : null}
     </>
