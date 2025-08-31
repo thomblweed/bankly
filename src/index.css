@@ -48,15 +48,10 @@
     color: var(--primary-900);
     background-color: var(--background-900);
     font-synthesis: none;
-    width: 90vw;
-    max-width: 800px;
-    margin: auto;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-size-adjust: 100%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
 }
 
 i a {
@@ -123,7 +118,12 @@ button[data-state="active"] {
     line-height: var(--line-height-normal);
 }
 
-table {
-    border-radius: var(--border-radius);
-    border-spacing: 0;
+.page-container {
+    width: 90vw;
+    max-width: 800px;
+    margin: auto;
+}
+
+section {
+    padding: var(--spacer-medium) 0;
 }

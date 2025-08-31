@@ -4,9 +4,13 @@ import { TransactionsProvider } from "../../components/transactions/context";
 
 export const Home = () => (
   <>
-    <Accounts />
-    <TransactionsProvider>
-      <TransactionHistory />
-    </TransactionsProvider>
+    <section>
+      <Accounts />
+    </section>
+    <section>
+      <TransactionsProvider>
+        <TransactionHistory />
+      </TransactionsProvider>
+    </section>
   </>
 );

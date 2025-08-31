@@ -26,6 +26,7 @@
 table {
     background-color: var(--background-800);
     border-radius: var(--border-radius);
+    border-spacing: 0;
     width: 100%;
     text-align: left;
 }
