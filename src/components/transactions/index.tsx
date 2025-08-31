@@ -17,8 +17,7 @@ const ThreeColumnLayout = ({ children }: { children: ReactNode }) => (
 );
 
 const ExpensesTransactionsBody = () => {
-  const { expensesTransactions } = useExpensesTransactions();
-  const { isLoading, error } = useTransactionsStatus();
+  const { expensesTransactions, isLoading, error } = useExpensesTransactions();
 
   return isLoading ? (
     <ThreeColumnLayout>
@@ -47,7 +46,7 @@ const Expenses = () => {
         <tr>
           <th>Description</th>
           <th>Date</th>
-          <th>Amount</th>
+          <th className="amount-column-th">Amount</th>
         </tr>
       </thead>
       <tbody>
@@ -58,11 +57,26 @@ const Expenses = () => {
 };
 
 const IncomeTransactionsBody = () => {
-  const { incomeTransactions } = useIncomeTransactions();
+  const { incomeTransactions, isLoading, error } = useIncomeTransactions();
 
-  return incomeTransactions.map((transaction) => (
-    <Transaction transaction={transaction} key={transaction.id} />
-  ));
+  return isLoading ? (
+    <ThreeColumnLayout>
+      <Loading />
+    </ThreeColumnLayout>
+  ) : (
+    <>
+      {incomeTransactions.map((transaction) => (
+        <Transaction transaction={transaction} key={transaction.id} />
+      ))}
+      {error ? (
+        <ThreeColumnLayout>
+          <p className="error-text">
+            There has been error in retrieving your income transactions
+          </p>
+        </ThreeColumnLayout>
+      ) : null}
+    </>
+  );
 };
 
 const Income = () => {
@@ -72,7 +86,7 @@ const Income = () => {
         <tr>
           <th>Description</th>
           <th>Date</th>
-          <th>Amount</th>
+          <th className="amount-column-th">Amount</th>
         </tr>
       </thead>
       <tbody>
