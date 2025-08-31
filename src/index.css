@@ -1,11 +1,16 @@
 :root {
     /* colours */
     --background-900: #0e0e11;
+    --background-850: #14141a;
     --background-800: #1e1e27;
     --primary-900: #ffffff;
     --primary-300: #88869f;
     --link: #646cff;
+    --color-black: #000000;
+    --color-light: #d9d9d9;
     --color-red: #ff0000;
+    --color-gray-100: #323241;
+    --color-gray-200: #282834;
 
     /* spacers */
     --spacer-small: 0.5rem;
@@ -16,31 +21,42 @@
 
     /* fonts */
     --font-small: 0.5rem;
+    --font-small-medium: 0.875rem;
     --font-medium: 1rem;
     --font-large: 1.5rem;
     --font-xlarge: 2rem;
     --font-xxlarge: 3rem;
 
+    /* font weights */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* line heights */
+    --line-height-normal: 22px;
+    --line-height-medium: 24px;
+    --line-height-large: 30px;
+    --line-height-xlarge: 40px;
+
+    --border-radius: var(--spacer-small);
+    --border-color: var(--color-gray-100);
+
     font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
     font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+    line-height: var(--line-height-medium);
+    font-weight: var(--font-weight-regular);
     color: var(--primary-900);
     background-color: var(--background-900);
     font-synthesis: none;
-    width: 90vw;
-    max-width: 800px;
-    margin: auto;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-size-adjust: 100%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
 }
 
 i a {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: #646cff;
     text-decoration: inherit;
 }
@@ -54,17 +70,19 @@ body {
 }
 
 h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
+    font-size: var(--font-large);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-large);
 }
 
 button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-gray-200);
+    padding: var(--spacer-small) var(--spacer-large);
+    font-size: var(--font-small-medium);
+    font-weight: var(--font-weight-medium);
     font-family: inherit;
+    line-height: var(--line-height-medium);
     background-color: var(--background-900);
     color: var(--primary-300);
     cursor: pointer;
@@ -81,8 +99,9 @@ button:focus-visible {
 }
 
 button[data-state="active"] {
-    --background-900: #d9d9d9;
-    --primary-300: #000000;
+    --background-900: var(--color-light);
+    --primary-300: var(--color-black);
+    border-color: var(--color-light);
 }
 
 .align-left {
@@ -91,4 +110,21 @@ button[data-state="active"] {
 
 .flow > * + * {
     margin-top: var(--spacer-medium);
+}
+
+.heading {
+    color: var(--primary-300);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-medium);
+    line-height: var(--line-height-normal);
+}
+
+.page-container {
+    width: 90vw;
+    max-width: 800px;
+    margin: auto;
+}
+
+section {
+    padding: var(--spacer-medium) 0;
 }

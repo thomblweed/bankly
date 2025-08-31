@@ -1,26 +1,27 @@
-.app__row {
-  display: flex;
-  margin-top: var(--spacer-medium);
-  gap: var(--spacer-medium);
+.header {
+    display: flex;
+    align-items: center;
+    height: 71px;
+    border-bottom: 1px solid var(--background-800);
 }
 
 .logo {
-  height: var(--spacer-medium);
-  will-change: filter;
+    height: 1.875rem;
+    will-change: filter;
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
 
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }
